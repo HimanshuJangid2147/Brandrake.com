@@ -241,7 +241,7 @@
                             </p>
                             <p class="cost">Cost of this type of UX/UI: <span>from {{ $i <= 3 ? '450 000' : '270 000' }} €</span></p>
                             <div class="actions-container">
-                                <a href="{{ route('', ['id' => $i]) }}" class="btn-solid">Case Study <i class="bi bi-arrow-right"></i></a>
+                                {{-- <a href="{{ route('portfolio.details', ['id' => $i]) }}" class="btn-solid">Case Study <i class="bi bi-arrow-right"></i></a> --}}
                                 <a href="#" class="btn-outline">Behance <i class="bi bi-box-arrow-up-right"></i></a>
                             </div>
                         </div>
@@ -443,7 +443,7 @@
                 </div>
 
                 <div class="col-lg-8">
-                    {{-- <form action="{{ route('') }}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                    {{-- <form action="{{ route('contact.send') }}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200"> --}}
                         @csrf
                         <div class="row gy-4">
 
@@ -472,7 +472,7 @@
                             </div>
 
                         </div>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@
                         <div class="card-body text-center">
                             <div class="d-flex justify-content-center border-dashed-bottom pb-3">
                                 <div class="thumb-xl bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center">
-                                    <img src="{{ asset('img/pp.svg') }}" alt="Avatar" class="rounded-circle" style="width: 80px; height: 80px;">
+                                    <img src="{{ asset('44.png') }}" alt="Avatar" class="rounded-circle" style="width: 80px; height: 80px;">
                                 </div>
                             </div>
                             <h4 class="mt-3 fw-semibold">{{ Auth::user()->name }}</h4>

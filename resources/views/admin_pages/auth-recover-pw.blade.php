@@ -61,7 +61,7 @@
                                         </div> <!--end form-group-->
                                     </form><!--end form-->
                                     <div class="text-center  mb-2">
-                                        <p class="text-muted">Remember It ? <a href="{{ route('admin.login') }}"
+                                        <p class="text-muted">Remember It ? <a href="{{ route('admin.login.form') }}"
                                                 class="text-primary ms-2">Sign in here</a></p>
                                     </div>
                                 </div><!--end card-body-->

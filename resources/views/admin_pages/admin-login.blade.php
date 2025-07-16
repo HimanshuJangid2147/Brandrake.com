@@ -2,10 +2,10 @@
 <html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
-    <title>Pitara Programming - Admin Login</title>
+    <title>Beandrake - Admin Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta content="Pitara Programming Admin Dashboard" name="description" />
-    <meta content="Pitara Programming" name="author" />
+    <meta content="Brandrake Admin Dashboard" name="description" />
+    <meta content="Brandrake" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
@@ -28,10 +28,10 @@
                                 <div class="card-body p-0 bg-black auth-header-box rounded-top">
                                     <div class="text-center p-3">
                                         <a href="{{ route('admin.index') }}" class="logo logo-admin">
-                                            <img src="{{ asset('img/pp.svg') }}" width="50" height="50" alt="Pitara Programming Logo" class="auth-logo">
+                                            <img src="{{ asset('44.png') }}" width="50" height="50" alt="Pitara Programming Logo" class="auth-logo">
                                         </a>
-                                        <h4 class="mt-3 mb-1 fw-semibold text-white fs-18">Pitara Programming</h4>
-                                        <p class="text-muted fw-medium mb-0">Sign in to continue to Pitara Programming.</p>
+                                        <h4 class="mt-3 mb-1 fw-semibold text-white fs-18">Brandrake</h4>
+                                        <p class="text-muted fw-medium mb-0">Sign in to continue to Brandrake Admin.</p>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">

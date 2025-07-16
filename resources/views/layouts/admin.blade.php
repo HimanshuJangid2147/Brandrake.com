@@ -1,47 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" data-startbar="light" data-bs-theme="light">
+<html lang="en" dir="ltr" data-bs-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'Pitara - Admin Dashboard')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    {{-- Favicon --}}
-    <link rel="shortcut icon" href="{{ asset('5.png') }}">
-
-    {{-- CSS Files --}}
+    <title>@yield('title', 'Brandrake - Admin')</title>
+    <link rel="shortcut icon" href="{{ asset('admin-assets/images/favicon.ico') }}">
     <link href="{{ asset('admin-assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin-assets/css/icons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin-assets/css/app.min.css') }}" rel="stylesheet">
-
-    @stack('styles')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body>
-
-    {{-- Header --}}
-    @include('partials.admin-header')
-
-    {{-- Sidebar --}}
-    @include('partials.admin-sidebar')
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-xxl">
+            <a class="navbar-brand" href="{{ route('admin.index') }}">
+                <img src="{{ asset('44.png') }}" width="50" height="50" alt="Pitara Programming">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.index') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.portfolio.index') }}">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.about.index') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.contact.index') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimonial.index') }}">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.service.index') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.call_to_action.index') }}">Call to Action</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.heroslider.index') }}">Hero Slider</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.general_settings.index') }}">Settings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.profile') }}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="page-wrapper">
-        <div class="page-content">
+        <div class="page-content" style="margin: 0;">
             <div class="container-xxl">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        @yield('breadcrumbs')
+                    </ol>
+                </nav>
+                <h1>@yield('header')</h1>
+                <p>@yield('subheader')</p>
                 @yield('content')
             </div>
         </div>
     </div>
 
-    {{-- JS Files --}}
-    <script src="{{ asset('admin-assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/data/stock-prices.js') }}"></script>
-    <script src="{{ asset('admin-assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/libs/jsvectormap/maps/world.js') }}"></script>
-    <script src="{{ asset('admin-assets/js/pages/index.init.js') }}"></script>
-    <script src="{{ asset('admin-assets/js/app.js') }}"></script>
+    <footer class="footer text-center text-sm-start d-print-none">
+        <div class="container-xxl">
+            <p class="text-muted mb-0">
+                © <script>document.write(new Date().getFullYear())</script> Pitara Programming
+            </p>
+        </div>
+    </footer>
 
-    @stack('scripts')
+    <script src="{{ asset('admin-assets/js/charts.js') }}"></script>
 </body>
 </html>

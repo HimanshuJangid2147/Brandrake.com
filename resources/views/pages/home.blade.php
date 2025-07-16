@@ -344,7 +344,7 @@
 
     </section>
 
-    <section id="team" class="team section">
+    {{-- <section id="team" class="team section">
 
         <div class="container section-title" data-aos="fade-up">
             <h2>Team</h2>
@@ -406,7 +406,7 @@
             </div>
         </div>
 
-    </section>
+    </section> --}}
 
     <section id="contact" class="contact section">
 

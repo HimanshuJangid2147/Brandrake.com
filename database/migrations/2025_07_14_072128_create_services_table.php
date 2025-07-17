@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('icon_class', 50);
-            $table->string('box_color', 20);
-            $table->string('title', 100);
-            $table->text('description');
+            $table->string('icon_class', 50)->nullable();
+            $table->string('box_color', 20)->default('blue');
+            $table->string('title', 100)->default('Service Title');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

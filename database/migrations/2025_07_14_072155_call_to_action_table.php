@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('call_to_action', function (Blueprint $table) {
             $table->id();
-            $table->string('background_image');
-            $table->string('title');
-            $table->text('text');
-            $table->string('button_text', 50);
-            $table->string('button_url');
+            $table->string('background_image')->nullable();
+            $table->string('title')->default('Ready to Start Your Project?');
+            $table->text('text')->nullable();
+            $table->string('button_text', 50)->default('Get Started');
+            $table->string('button_url')->default('#');
             $table->timestamps();
         });
     }

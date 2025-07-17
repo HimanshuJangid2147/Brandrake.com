@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\Storage;
 
 class CallToActionController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $settings = CallToAction::paginate(10);
+        // --- THIS IS THE FIX ---
+        // We fetch the first (and only) Call to Action record.
+        // firstOrCreate() ensures a record exists, preventing errors on new installs.
+        $callToAction = CallToAction::firstOrCreate([]);
+
+        // We then pass the single $callToAction object to the view.
         return view('admin_pages.cta.index', compact('callToAction'));
     }
 
@@ -28,6 +28,10 @@ class CallToActionController extends Controller
      */
     public function create()
     {
+        $cta = CallToAction::first();
+        if ($cta) {
+            return redirect()->route('admin.call_to_action.edit', $cta->id);
+        }
         return view('admin_pages.cta.create');
     }
 
@@ -37,75 +41,73 @@ class CallToActionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'title' => 'required|string|max:255',
             'text' => 'required|string',
             'button_text' => 'required|string|max:50',
-            'button_url' => 'required|string|max:255',
+            'button_url' => 'required|url',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = $request->all();
-        if ($request->hasFile('background_image')) {
-            $data['background_image'] = $request->file('background_image')->store('call_to_action', 'public');
-        }
+        $imagePath = $request->file('background_image')->store('cta', 'public');
 
-        CallToAction::create($data);
+        CallToAction::create(array_merge($request->all(), ['background_image' => $imagePath]));
 
-        return redirect()->route('admin.call_to_action.index')->with('success', 'Call to action created');
+        return redirect()->route('admin.call_to_action.index')->with('success', 'Call to Action section created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(CallToAction $callToAction)
     {
-        return view('admin_pages.cta.show', compact('call_to_action'));
+        return view('admin_pages.cta.show', compact('callToAction'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(CallToAction $callToAction)
     {
-        return view('admin_pages.cta.edit', compact('call_to_action'));
+        return view('admin_pages.cta.edit', compact('callToAction'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CallToAction $call_to_action)
+    public function update(Request $request, CallToAction $callToAction)
     {
         $request->validate([
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'title' => 'required|string|max:255',
             'text' => 'required|string',
             'button_text' => 'required|string|max:50',
-            'button_url' => 'required|string|max:255',
+            'button_url' => 'required|url',
+            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('background_image');
+
         if ($request->hasFile('background_image')) {
-            if ($call_to_action->background_image) {
-                Storage::delete('public/' . $call_to_action->background_image);
+            if ($callToAction->background_image) {
+                Storage::disk('public')->delete($callToAction->background_image);
             }
-            $data['background_image'] = $request->file('background_image')->store('call_to_action', 'public');
+            $data['background_image'] = $request->file('background_image')->store('cta', 'public');
         }
 
-        $call_to_action->update($data);
+        $callToAction->update($data);
 
-        return redirect()->route('admin.call_to_action.index')->with('success', 'Call to action updated');
+        return redirect()->route('admin.call_to_action.index')->with('success', 'Call to Action section updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CallToAction $call_to_action)
+    public function destroy(CallToAction $callToAction)
     {
-        if ($call_to_action->background_image) {
-            Storage::delete('public/' . $call_to_action->background_image);
+        if ($callToAction->background_image) {
+            Storage::disk('public')->delete($callToAction->background_image);
         }
-        $call_to_action->delete();
+        $callToAction->delete();
 
-        return redirect()->route('admin.call_to_action.index')->with('success', 'Call to action deleted');
+        return redirect()->route('admin.call_to_action.index')->with('success', 'Call to Action section deleted successfully.');
     }
 }

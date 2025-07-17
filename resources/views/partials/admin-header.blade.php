@@ -274,9 +274,9 @@
                             </div>
                             <div class="dropdown-divider mt-0"></div>
                             <small class="text-muted px-2 py-1 d-block">Settings</small>
-                            <a class="dropdown-item" href="{{ route('admin.generalsettings') }}"><i
+                            <a class="dropdown-item" href="{{ route('admin.general_settings.index') }}"><i
                                     class="las la-cog fs-18 me-1 align-text-bottom"></i> General</a>
-                            <a class="dropdown-item" href="{{ route('admin.settings') }}"><i
+                            <a class="dropdown-item" href="{{ route('admin.settings.profile') }}"><i
                                     class="las la-lock fs-18 me-1 align-text-bottom"></i> Security</a>
                             <div class="dropdown-divider mb-0"></div>
                             <div class="dropdown-item text-danger">

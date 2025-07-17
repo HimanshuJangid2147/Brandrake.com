@@ -9,26 +9,26 @@ class Portfolio extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'portfolio';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
         'title',
-        'description',
-        'cost',
-        'case_study_url',
-        'behance_url',
-        'mockup_image',
-        'background_video',
-        'style',
+        'description', // This is now the short description
+        'mockup_image', // This is now the main/featured image
+        'full_content',
+        'gallery_images',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * This tells Laravel to automatically convert the 'gallery_images'
+     * JSON from the database into a PHP array and back.
+     */
+    protected $casts = [
+        'gallery_images' => 'array',
     ];
 }

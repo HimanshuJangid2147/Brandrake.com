@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Storage;
 class AboutSectionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      */
     public function index()
     {
-        $settings = AboutSection::paginate(10);
+        // --- THIS IS THE FIX ---
+        // This ensures we always get the single 'About' section record.
+        // firstOrCreate() will get the first record, or create a new empty one
+        // if the table is empty. This prevents errors on new installations.
+        $aboutSection = AboutSection::firstOrCreate([]);
+
+        // Pass the single $aboutSection object to the view.
         return view('admin_pages.about.index', compact('aboutSection'));
     }
 
@@ -23,6 +29,11 @@ class AboutSectionController extends Controller
      */
     public function create()
     {
+        // Since there should only be one, we redirect to the edit page if it exists.
+        $aboutSection = AboutSection::first();
+        if ($aboutSection) {
+            return redirect()->route('admin.about.edit', $aboutSection->id);
+        }
         return view('admin_pages.about.create');
     }
 
@@ -39,32 +50,22 @@ class AboutSectionController extends Controller
             'list_item_1' => 'required|string',
             'list_item_2' => 'required|string',
             'list_item_3' => 'required|string',
-            'image_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = $request->all();
-        if ($request->hasFile('image_url')) {
-            $data['image_url'] = $request->file('image_url')->store('about', 'public');
-        }
+        $imagePath = $request->file('image_url')->store('about_section', 'public');
 
-        AboutSection::create($data);
+        AboutSection::create(array_merge($request->all(), ['image_url' => $imagePath]));
 
-        return redirect()->route('admin.about.index')->with('success', 'About section created');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return view('admin_pages.about.show', compact('about'));
+        return redirect()->route('admin.about.index')->with('success', 'About section created successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(AboutSection $about)
     {
+        // The route model binding correctly finds the section to edit.
         return view('admin_pages.about.edit', compact('about'));
     }
 
@@ -81,20 +82,21 @@ class AboutSectionController extends Controller
             'list_item_1' => 'required|string',
             'list_item_2' => 'required|string',
             'list_item_3' => 'required|string',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image_url');
+
         if ($request->hasFile('image_url')) {
             if ($about->image_url) {
-                Storage::delete('public/' . $about->image_url);
+                Storage::disk('public')->delete($about->image_url);
             }
-            $data['image_url'] = $request->file('image_url')->store('about', 'public');
+            $data['image_url'] = $request->file('image_url')->store('about_section', 'public');
         }
 
         $about->update($data);
 
-        return redirect()->route('admin.about.index')->with('success', 'About section updated');
+        return redirect()->route('admin.about.index')->with('success', 'About section updated successfully.');
     }
 
     /**
@@ -103,10 +105,10 @@ class AboutSectionController extends Controller
     public function destroy(AboutSection $about)
     {
         if ($about->image_url) {
-            Storage::delete('public/' . $about->image_url);
+            Storage::disk('public')->delete($about->image_url);
         }
         $about->delete();
 
-        return redirect()->route('admin.about.index')->with('success', 'About section deleted');
+        return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully.');
     }
 }

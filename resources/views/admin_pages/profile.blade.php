@@ -30,7 +30,7 @@
                             <p class="mb-1"><strong>Username:</strong> {{ Auth::user()->username }}</p>
                             <p class="mb-1"><strong>Email:</strong> {{ Auth::user()->email }}</p>
                             <p class="mb-3"><strong>Joined:</strong> {{ Auth::user()->created_at->format('M d, Y') }}</p>
-                            <a href="{{ route('admin.settings') }}" class="btn btn-primary btn-sm">Edit Profile</a>
+                            <a href="{{ route('admin.settings.profile') }}" class="btn btn-primary btn-sm">Edit Profile</a>
                         </div>
                     </div>
                 </div>

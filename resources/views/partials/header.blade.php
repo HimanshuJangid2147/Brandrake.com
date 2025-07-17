@@ -6,7 +6,7 @@
 
         <!-- Logo -->
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-            <img src="{{ asset('44.png') }}" alt="Brandrake Logo">
+            <img src="{{ asset($siteSettings->logo_path ?? '44.png') }}" alt="{{ $siteSettings->site_name ?? 'Brandrake Logo' }}">
         </a>
 
         <!-- Navigation Menu -->

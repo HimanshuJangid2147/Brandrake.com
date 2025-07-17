@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('about_section', function (Blueprint $table) {
             $table->id();
             $table->string('section_title', 100)->default('About');
-            $table->text('section_subtitle');
-            $table->string('title');
-            $table->text('subtitle');
-            $table->text('list_item_1');
-            $table->text('list_item_2');
-            $table->text('list_item_3');
-            $table->string('image_url');
+            $table->text('section_subtitle')->nullable();
+            $table->string('title')->default('Who We Are');
+            $table->text('subtitle')->nullable();
+            $table->text('list_item_1')->nullable();
+            $table->text('list_item_2')->nullable();
+            $table->text('list_item_3')->nullable();
+            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }
